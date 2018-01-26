@@ -131,29 +131,42 @@ def get_all_products():
 
 
 @post("/product")
-def add_or_update_product(title,desc,price,img_url,category,favorite,id=0):
+def add_or_update_product():
+    print "inside update product"
+    category = request.POST.get('category')
+    desc = request.POST.get('desc')
+    price = request.POST.get('price')
+    title = request.POST.get('title')
+    favorite = request.POST.get('favorite')
+    img_url = request.POST.get('img_url')
+    product_id = request.POST.get('id')
+    print product_id
+    if favorite=='on':
+        is_favorite='1'
+    else:
+        is_favorite = '0'
+    try:
+        with connection.cursor() as cursor:
+            if product_id == "":
+                sql = 'INSERT INTO product (category,description,price,title,favorite,img_url) ' \
+                      'VALUES ("{0}","{1}","{2}","{3}","{4}","{5}")'.format(category,desc,price,title,is_favorite,img_url)
+            elif product_id>0 :
+                sql = 'UPDATE product SET category="{0}", description="{1}", price="{2}", title="{3}",favorite="{4}"' \
+                      ',img_url="{5}" WHERE id="{6}"'.format(category,desc,price,title,is_favorite,img_url,product_id)
+            cursor.execute(sql)
+            connection.commit()
+            status = "success"
+            msg = ""
+            print "success code - 201 product create/updated"
 
-        try:
-            with connection.cursor() as cursor:
-                if id == 0:
-                    sql = 'INSERT INTO product (title,desc,price,img_url,category,favorite) ' \
-                          'VALUES ("{0}","{1}","{2}","{3}","{4}","{5}")'.format(category,desc,price,title,favorite,img_url)
-                elif id>0 :
-                    sql = 'UPDATE product SET category="{0}", description="{1}", price="{2}", title="{3}",favorite="{4}"' \
-                          ',img_url="{5}" WHERE id="{6}"'.format(category,desc,price,title,favorite,img_url,id)
-                cursor.execute(sql)
-                product_id = id
-                connection.commit()
-                status = "success"
-                msg = ""
-                print "success code - 201 product create/updated"
+    except Exception as e:
+        status = "error"
+        product_id = 0
+        msg = repr(e)
 
-        except Exception as e:
-            status = "error"
-            msg = repr(e)
-
-        result = {"STATUS": status, "MSG": msg, "PRODUCT_ID": product_id}
-        return json.dumps(result)
+    result = {"STATUS": status, "MSG": msg, "PRODUCT_ID": product_id}
+    print result
+    return json.dumps(result)
 
 
 
