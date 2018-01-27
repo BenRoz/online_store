@@ -75,4 +75,13 @@ body{
 .product.favorite .fav{
     opacity:1;
 }
-
+.store_name{
+    display: inline-block;
+    position: absolute;
+    left: 38%;
+    width: auto;
+    height: auto;
+    top: 100px;
+    font-size: 40px;
+    font-family: fantasy;
+}

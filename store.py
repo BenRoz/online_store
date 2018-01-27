@@ -140,9 +140,8 @@ def add_or_update_product():
     favorite = request.POST.get('favorite')
     img_url = request.POST.get('img_url')
     product_id = request.POST.get('id')
-    print product_id
-    if favorite=='on':
-        is_favorite='1'
+    if favorite == 'on':
+        is_favorite = '1'
     else:
         is_favorite = '0'
     try:
@@ -205,6 +204,28 @@ def delete_product(del_this_product_id):
         msg = repr(e)
 
     result = {"STATUS": status, "MSG": msg}
+    return json.dumps(result)
+
+
+@post("/settings")
+def changing_Store_name():
+    print "inside change name"
+    store_name = request.POST.get('name')
+    try:
+        with connection.cursor() as cursor:
+            sql = 'UPDATE store_name SET name="{}" WHERE id=1'.format(store_name)
+            cursor.execute(sql)
+            connection.commit()
+            status = "success"
+            msg = ""
+            print "success code name changed - 201"
+
+    except Exception as e:
+        status = "error"
+        store_name=""
+        msg = repr(e)
+
+    result = {"STATUS": status, "NAME":store_name, "MSG": msg}
     return json.dumps(result)
 
 @get('/js/<filename:re:.*\.js>')

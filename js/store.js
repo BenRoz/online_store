@@ -3,6 +3,7 @@ var Store = {};
 Store.start = function(){
 	$(document).ready(function() {
 		Store.loadCategories();
+		Store.loadStoreName();
 	});
 };
 
@@ -50,5 +51,17 @@ Store.loadProducts = function(category){
 		}
 	},"json");
 };
+
+Store.loadStoreName= function(){
+	$.get("/settings",function(result){
+			if (result["STATUS"] == "ERROR"){
+				alert(result["MSG"]);
+			}else{
+				var selected_store_name = result["NAME"];
+				$(".store_name").text(selected_store_name);
+            }
+		},"json");
+};
+
 Store.start();
 
