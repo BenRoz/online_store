@@ -220,7 +220,7 @@ StoreAdmin.deleteProduct = function(deleteBtn, pid){
 function setting_form_submitted(){
     var email = document.forms["settings-form"]["email"].value;
     var chosen_store_name = document.forms["settings-form"]["choose-store-name"].value;
-    $.post("/settings",{"name":chosen_store_name},function(result){
+    $.post("/settings",{"name":chosen_store_name, "email":email},function(result){
 			if (result["STATUS"] == "ERROR"){
 				alert(result["MSG"]);
 			}else{

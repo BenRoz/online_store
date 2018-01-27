@@ -211,10 +211,14 @@ def delete_product(del_this_product_id):
 def changing_Store_name():
     print "inside change name"
     store_name = request.POST.get('name')
+    email = request.POST.get('email')
     try:
         with connection.cursor() as cursor:
             sql = 'UPDATE store_name SET name="{}" WHERE id=1'.format(store_name)
             cursor.execute(sql)
+            if email != "":
+                sql = 'UPDATE store_name SET name="{}" WHERE id=2'.format(email)
+                cursor.execute(sql)
             connection.commit()
             status = "success"
             msg = ""
@@ -227,6 +231,34 @@ def changing_Store_name():
 
     result = {"STATUS": status, "NAME":store_name, "MSG": msg}
     return json.dumps(result)
+
+
+@get("/fetching_settings")
+def fetching_Store_name():
+    print "inside getting store name"
+    try:
+        with connection.cursor() as cursor:
+            sql = 'SELECT name FROM store_name WHERE id=1'
+            cursor.execute(sql)
+            store_name = cursor.fetchall()
+            sql = 'SELECT name FROM store_name WHERE id=2'
+            cursor.execute(sql)
+            email = cursor.fetchone()
+            connection.commit()
+            status = "success"
+            msg = ""
+            print "success code name changed - 201"
+
+    except Exception as e:
+        email = ''
+        status = "error"
+        store_name = 'Bens cool shoe shop'
+        msg = repr(e)
+
+    result = {"STATUS": status, "NAME":store_name, "EMAIL":email, "MSG": msg}
+    return json.dumps(result)
+
+
 
 @get('/js/<filename:re:.*\.js>')
 def javascripts(filename):

@@ -14,7 +14,7 @@
         <nav id="categories" class="menu-btn clickable"><i class="fa fa-bars btn-icon" aria-hidden="true"></i>Manage Categories</nav>
         <nav id="products" class="menu-btn clickable"><i class="fa fa-gift btn-icon" aria-hidden="true"></i>Manage Products</nav>
         <nav id="goto" class="menu-btn clickable"><i class="fa fa-shopping-cart btn-icon" aria-hidden="true"></i>Go to Store</i></nav>
-        <nav id="settings" class="menu-btn clickable"><i class="fa fa-shopping-cart btn-icon" aria-hidden="true"></i>settings</i></nav>
+        <nav id="settings" class="menu-btn clickable"><i class="fa fa-cog btn-icon" aria-hidden="true"></i>settings</i></nav>
     </header>
     <hr>
     <section id="loading-page" class="admin-page">
@@ -53,7 +53,7 @@
         <form name="settings-form" >
             <table>
             <tr><td><label>Store name: </label></td><td><input type="text" name="choose-store-name" /></td></tr>
-            <tr><td><label>Email: </label></td><td><input type="text" name="email" /></td></tr>
+            <tr><td><label>Email: </label></td><td><input type="email" name="email"/></td></tr>
             <tr><td colspan="2"><input type="hidden" name="id" /> <input type="submit" class="clickable" onclick="setting_form_submitted();" value="update" />
             </table>
         </form>

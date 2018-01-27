@@ -3,7 +3,7 @@ var Store = {};
 Store.start = function(){
 	$(document).ready(function() {
 		Store.loadCategories();
-		Store.loadStoreName();
+		Store.loadStoreName_and_email();
 	});
 };
 
@@ -52,13 +52,15 @@ Store.loadProducts = function(category){
 	},"json");
 };
 
-Store.loadStoreName= function(){
-	$.get("/settings",function(result){
+Store.loadStoreName_and_email= function(){
+	$.get("/fetching_settings",function(result){
 			if (result["STATUS"] == "ERROR"){
 				alert(result["MSG"]);
 			}else{
-				var selected_store_name = result["NAME"];
+				var selected_store_name = result["NAME"][0]["name"];
 				$(".store_name").text(selected_store_name);
+				var email_address = result["EMAIL"]["name"];
+                $("#email_field").val(email_address);
             }
 		},"json");
 };
