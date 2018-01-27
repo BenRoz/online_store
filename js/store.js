@@ -65,5 +65,16 @@ Store.loadStoreName_and_email= function(){
 		},"json");
 };
 
+var admin_button = $("#admin_btn");
+admin_button.click(function(){
+    $.get("/admin",function(){
+				console.log ("hope");
+		},"json");
+});
+
+Store.to_admin = function(){
+    window.location.assign("http://localhost:7008/admin")
+};
+
 Store.start();
 

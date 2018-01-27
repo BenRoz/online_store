@@ -85,3 +85,12 @@ body{
     font-size: 40px;
     font-family: fantasy;
 }
+#admin_btn{
+    position: absolute;
+    right: 0px;
+    background: blanchedalmond;
+    width: 100px;
+    height: auto;
+    font-size: x-large;
+    border: 1px solid;
+}
